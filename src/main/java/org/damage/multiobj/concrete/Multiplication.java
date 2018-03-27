@@ -1,5 +1,14 @@
 package org.damage.multiobj.concrete;
 
-public interface Multiplication<T> {
+import org.damage.multiobj.prx.Operation;
+
+public interface Multiplication<T> extends Operation {
+
+    default String getName() {
+        return "ops";
+    }
+
     T multiply(T first, T second);
+
+
 }
