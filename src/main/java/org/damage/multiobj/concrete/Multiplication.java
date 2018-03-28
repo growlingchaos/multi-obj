@@ -4,7 +4,7 @@ import org.damage.multiobj.prx.InvokableOperation;
 
 public interface Multiplication<T> extends InvokableOperation {
 
-    default String getName() {
+    default String getVarName() {
         return "ops";
     }
 

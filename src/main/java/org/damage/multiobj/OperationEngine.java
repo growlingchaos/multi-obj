@@ -27,7 +27,7 @@ public class OperationEngine {
     public OperationEngine(Set<InvokableOperation> operations) {
         Map<String, Set<InvokableOperation>> operationMap = new HashMap<>();
         for (InvokableOperation op : operations) {
-            Set<InvokableOperation> opSet = operationMap.computeIfAbsent(op.getName(), s -> new HashSet<>());
+            Set<InvokableOperation> opSet = operationMap.computeIfAbsent(op.getVarName(), s -> new HashSet<>());
             opSet.add(op);
         }
 
