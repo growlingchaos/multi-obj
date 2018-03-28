@@ -1,5 +1,5 @@
 package org.damage.multiobj.prx;
 
-public interface Operation {
+public interface InvokableOperation {
     String getName();
 }

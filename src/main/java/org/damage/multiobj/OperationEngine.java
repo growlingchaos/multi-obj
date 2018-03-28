@@ -1,7 +1,7 @@
 package org.damage.multiobj;
 
+import org.damage.multiobj.prx.InvokableOperation;
 import org.damage.multiobj.prx.OpHandler;
-import org.damage.multiobj.prx.Operation;
 import org.springframework.expression.Expression;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
@@ -24,16 +24,16 @@ public class OperationEngine {
 
     private final StandardEvaluationContext context;
 
-    public OperationEngine(Set<Operation> operations) {
-        Map<String, Set<Operation>> operationMap = new HashMap<>();
-        for (Operation op : operations) {
-            Set<Operation> opSet = operationMap.computeIfAbsent(op.getName(), s -> new HashSet<>());
+    public OperationEngine(Set<InvokableOperation> operations) {
+        Map<String, Set<InvokableOperation>> operationMap = new HashMap<>();
+        for (InvokableOperation op : operations) {
+            Set<InvokableOperation> opSet = operationMap.computeIfAbsent(op.getName(), s -> new HashSet<>());
             opSet.add(op);
         }
 
         // variable -> proxy
         Map<String, Object> proxyMap = new HashMap<>();
-        for (Map.Entry<String, Set<Operation>> entry : operationMap.entrySet()) {
+        for (Map.Entry<String, Set<InvokableOperation>> entry : operationMap.entrySet()) {
             Object proxy = makeProxyFor(entry.getValue());
             proxyMap.put(entry.getKey(), proxy);
         }
@@ -43,9 +43,9 @@ public class OperationEngine {
         proxyMap.forEach(context::setVariable);
     }
 
-    private Object makeProxyFor(Set<Operation> opSet) {
+    private Object makeProxyFor(Set<InvokableOperation> opSet) {
         List<Class<?>> interfaces = new ArrayList<>();
-        for (Operation op : opSet) {
+        for (InvokableOperation op : opSet) {
             interfaces.addAll(Arrays.asList(op.getClass().getInterfaces()));
         }
         return Proxy.newProxyInstance(getClass().getClassLoader(),

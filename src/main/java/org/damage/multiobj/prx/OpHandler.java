@@ -12,17 +12,17 @@ import java.util.Set;
 public class OpHandler implements InvocationHandler {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private final Set<Operation> operations;
+    private final Set<InvokableOperation> operations;
 
 
-    public OpHandler(Set<Operation> operations) {
+    public OpHandler(Set<InvokableOperation> operations) {
         this.operations = operations;
     }
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         logger.info("invoked {}", method.getName());
-        for (Operation operation : operations) {
+        for (InvokableOperation operation : operations) {
             if (hasMethod(operation, method)) {
                 return safeInvoke(operation, method, args);
             }
@@ -30,7 +30,7 @@ public class OpHandler implements InvocationHandler {
         throw new RuntimeException("No method implemented for " + method.getName());
     }
 
-    private Object safeInvoke(Operation operation, Method method, Object[] args) {
+    private Object safeInvoke(InvokableOperation operation, Method method, Object[] args) {
         try {
             if (ReflectionUtils.isToStringMethod(method)) {
                 return toString();
@@ -42,7 +42,7 @@ public class OpHandler implements InvocationHandler {
         return null;
     }
 
-    private boolean hasMethod(Operation operation, Method method) {
+    private boolean hasMethod(InvokableOperation operation, Method method) {
         try {
             operation.getClass().getMethod(method.getName(), method.getParameterTypes());
             return true;

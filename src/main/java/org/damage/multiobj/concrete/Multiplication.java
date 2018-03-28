@@ -1,8 +1,8 @@
 package org.damage.multiobj.concrete;
 
-import org.damage.multiobj.prx.Operation;
+import org.damage.multiobj.prx.InvokableOperation;
 
-public interface Multiplication<T> extends Operation {
+public interface Multiplication<T> extends InvokableOperation {
 
     default String getName() {
         return "ops";
