@@ -25,22 +25,30 @@ public class OperationEngine {
     private final StandardEvaluationContext context;
 
     public OperationEngine(Set<InvokableOperation> operations) {
-        Map<String, Set<InvokableOperation>> operationMap = new HashMap<>();
+        parser = new SpelExpressionParser();
+        context = new StandardEvaluationContext();
+        Map<String, Object> proxyMap = makeVarNameToProxyMap(operations);
+        proxyMap.forEach(context::setVariable);
+    }
+
+    private Map<String, Object> makeVarNameToProxyMap(Set<InvokableOperation> operations) {
+        Map<String, Set<InvokableOperation>> opsByVarName = groupOperationsByVarName(operations);
+        Map<String, Object> proxyMap = new HashMap<>();
+        for (Map.Entry<String, Set<InvokableOperation>> entry : opsByVarName.entrySet()) {
+            Object proxy = makeProxyFor(entry.getValue());
+            proxyMap.put(entry.getKey(), proxy);
+        }
+        return proxyMap;
+    }
+
+    private Map<String, Set<InvokableOperation>> groupOperationsByVarName(Set<InvokableOperation> operations) {
+        Map<String, Set<InvokableOperation>> operationMap;
+        operationMap = new HashMap<>();
         for (InvokableOperation op : operations) {
             Set<InvokableOperation> opSet = operationMap.computeIfAbsent(op.getVarName(), s -> new HashSet<>());
             opSet.add(op);
         }
-
-        // variable -> proxy
-        Map<String, Object> proxyMap = new HashMap<>();
-        for (Map.Entry<String, Set<InvokableOperation>> entry : operationMap.entrySet()) {
-            Object proxy = makeProxyFor(entry.getValue());
-            proxyMap.put(entry.getKey(), proxy);
-        }
-
-        parser = new SpelExpressionParser();
-        context = new StandardEvaluationContext();
-        proxyMap.forEach(context::setVariable);
+        return operationMap;
     }
 
     private Object makeProxyFor(Set<InvokableOperation> opSet) {
