@@ -17,9 +17,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Evaluate an expression given all the operations that are possible.
+ */
 @Component
 public class OperationEngine {
-
+    /*
+     * It groups all the operations by variable name and creates a proxy for each one, using the
+     * sub-interfaces of Operation.
+     */
     private final ExpressionParser parser;
 
     private final StandardEvaluationContext context;

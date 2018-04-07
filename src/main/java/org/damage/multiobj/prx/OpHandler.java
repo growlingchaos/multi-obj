@@ -13,6 +13,11 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * Mediate the call of a method to the right object that has that method's implementation.
+ *
+ * It maps methods to the right operation object.
+ */
 public class OpHandler implements InvocationHandler {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -61,6 +66,9 @@ public class OpHandler implements InvocationHandler {
         return "OpHandler{" + "operations=" + operations + '}';
     }
 
+    /**
+     * Define the signature of a method based on the name and arguments list.
+     */
     private static class MethodSignature {
         private final String name;
         private final Class<?> parameters[];
