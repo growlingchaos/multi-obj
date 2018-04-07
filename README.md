@@ -20,4 +20,4 @@ _DISCLAIMER_: The implementation is just a proof of concept for the proposed sol
 is meant to be product ready.
 
 Start the code exploration at 
-[`OperationEngine`](blob/master/src/main/java/org/damage/multiobj/OperationEngine.java).
+[`OperationEngine`](src/main/java/org/damage/multiobj/OperationEngine.java).
