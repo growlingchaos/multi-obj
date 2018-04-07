@@ -9,7 +9,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
-public class InvokableOperationEngineTest {
+public class OperationEngineTest {
 
     @Autowired
     private OperationEngine operationEngine;
