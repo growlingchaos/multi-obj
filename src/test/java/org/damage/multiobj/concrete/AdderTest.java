@@ -1,7 +1,7 @@
 package org.damage.multiobj.concrete;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -10,7 +10,7 @@ public class AdderTest {
 
     private Adder adder;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         this.adder = new Adder();
     }
