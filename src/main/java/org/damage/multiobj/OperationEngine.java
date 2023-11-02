@@ -24,7 +24,7 @@ import java.util.Set;
 public class OperationEngine {
     /*
      * It groups all the operations by variable name and creates a proxy for each one, using the
-     * sub-interfaces of Operation.
+     * sub-interfaces of InvokableOperation.
      */
     private final ExpressionParser parser;
 
