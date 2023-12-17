@@ -71,7 +71,7 @@ public class OpHandler implements InvocationHandler {
      */
     private static class MethodSignature {
         private final String name;
-        private final Class<?> parameters[];
+        private final Class<?>[] parameters;
 
         MethodSignature(Method method) {
             this(method.getName(), method.getParameterTypes());
